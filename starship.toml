@@ -1,0 +1,155 @@
+# FIRST LINE/ROW: Info & Status
+# First param ─┌
+#
+add_newline = true
+#format = "$username$hostname$directory"
+
+[username]
+format = " [╭─](bold red)[$user]($style)@"
+show_always = true
+style_root = "bold cyan"
+style_user = "bold red"
+# Second param
+[hostname]
+disabled = false
+format = "[$hostname](red bg:black bold) on [Artixlinus](bold cyan italic bg:black) in "
+ssh_only = false
+#style = "bg:magenta fg:red"
+#trim_at = "-"
+
+# Third param
+[directory]
+style = "purple bold"
+format = "[$path/]($style) [$read_only]($read_only_style)"
+truncate_to_repo = true
+truncation_length = 0
+read_only = 'RO 󱧵 '
+truncation_symbol = " repo: "
+[direnv]
+disabled = false
+# Fourth param
+[sudo]
+disabled = false
+symbol = "SU "
+
+# Before all the version info (python, nodejs, php, etc.)
+[git_status]
+ahead = "ahead ${count}"
+behind = "behind ${count}"
+deleted = "removed sth"
+diverged = "ahead ${ahead_count} behind ${behind_count}"
+style = "white"
+up_to_date = ""
+modified = 'modified '
+untracked = 'untracked '
+[git_metrics]
+disabled = false
+# Display last commit ID and current Tag version
+[git_commit]
+tag_symbol = '  '
+tag_disabled = false
+only_detached = false # If false, it shows the tag even if you are on a branch
+style = "bold blue italic"
+format = '[\($hash$tag\)]($style) '
+# Last param in the first line/row
+[cmd_duration]
+disabled = false
+format = "took [$duration]($style)"
+min_time = 1
+style = "red italic"
+## SECOND LINE/ROW: Prompt
+# Somethere at the beginning
+[battery]
+charging_symbol = "BC"
+disabled = true
+discharging_symbol = "BDC"
+full_symbol = ""
+# Prompt: optional param 1
+[time]
+disabled = true
+format = " $time($style)\n"
+style = "bright-white"
+time_format = "%T"
+
+# Prompt: param 2
+[character]
+error_symbol = " [╰─ -<](bold red)"
+success_symbol = " [╰─λ](bold red)"
+vimcmd_symbol = '[V](bold green) '
+# SYMBOLS
+[status]
+disabled = true
+format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]]($style)'
+map_symbol = true
+pipestatus = true
+symbol = "<>"
+
+
+
+[aws]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = "󱄅 "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+detect_extensions = []
+detect_folders = ['.venv']
+generic_venv_names = ['.venv']
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[swift]
+symbol = "ﯣ "

@@ -1,0 +1,5 @@
+--local hy3 = hl.plugin.hy3
+--hl.bind("SUPER+left", hy3.move_focus("l") )
+--hl.bind("SUPER+up", hy3.move_focus("u") )
+--hl.bind("SUPER+down", hy3.move_focus("d") )
+--hl.bind("SUPER+right", hy3.move_focus("r") )
