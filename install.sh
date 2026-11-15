@@ -19,7 +19,7 @@ rm -rf $homedir/.config/hypr
 cp "$gitdir/hypr" -r "$homedir/.config/"
 cp "$gitdir/fastfetch" -r "$homedir/.config/"
 cp "$gitdir/kitty" -r "$homedir/.config/"
-
+cp "$gitdir/.zshrc" "$homedir/"
 pacman -S nvim --noconfirm --needed
 git clone https://github.com/LazyVim/starter ~/.config/nvim
 pacman -S easyeffects --noconfirm --needed
@@ -29,3 +29,5 @@ pacman -S zip unzip --needed --noconfirm
 pacman -S ttf-victor-mono-nerd
 mkdir -p $homedir/Obrazy/Wallpapers
 cp $gitdir/img_0946.jpg $homedir/Obrazy/Wallpapers/img_0946.jpg
+
+cd ~/.config/quickshell/ && git clone https://github.com/pctrade/end4-pC.git
