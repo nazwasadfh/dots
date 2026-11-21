@@ -12,7 +12,7 @@ style_user = "bold red"
 # Second param
 [hostname]
 disabled = false
-format = "[$hostname](red bg:black bold) on [Artixlinus](bold cyan italic bg:black) in "
+format = "[$hostname](red bg:black bold) on [BlitzLinus](bold cyan italic bg:black) in "
 ssh_only = false
 #style = "bg:magenta fg:red"
 #trim_at = "-"
@@ -48,7 +48,7 @@ disabled = false
 [git_commit]
 tag_symbol = '  '
 tag_disabled = false
-only_detached = false # If false, it shows the tag even if you are on a branch
+only_detached = false               # If false, it shows the tag even if you are on a branch
 style = "bold blue italic"
 format = '[\($hash$tag\)]($style) '
 # Last param in the first line/row
@@ -83,7 +83,6 @@ format = '[\[$symbol$status_common_meaning$status_signal_name$status_maybe_int\]
 map_symbol = true
 pipestatus = true
 symbol = "<>"
-
 
 
 [aws]
