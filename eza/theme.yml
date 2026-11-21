@@ -1,0 +1,56 @@
+extensions:
+  iso:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  wim:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  img:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  vhd:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  vhdx:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  vmdk:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
+
+  qcow2:
+    filename:
+      foreground: "#f9e2af"
+    icon:
+      glyph: ""
+      style:
+        foreground: "#f9e2af"
