@@ -356,7 +356,19 @@ alias jctl="journalctl -p 3 -xb"
 
 # Recent installed packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
-source /home/imfl/wpapermgr/zshinit/*
+#source /home/imfl/wpapermgr/zshinit/*
+
+alias p="sudo pacman -S"
+alias r="sudo pacman -Rns"
+alias cls="printf '\33[2J\033[3J\033[H'"
+alias cfetch="cls && fastfetch"
+
+alias vim="/bin/nvim"
+
+
+alias rsyncmakebackup="rsync -avc --delete"
+
+
 # Load Mcfly
 export MCFLY_FUZZY=true
 export MCFLY_RESULTS=20
