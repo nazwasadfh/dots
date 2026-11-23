@@ -18,13 +18,8 @@
 
 -- ######## Window rules ########
 
--- Disable blur for xwayland context menus
-hl.window_rule({ match = { class = "^()$", title = "^()$" }, no_blur = true })
--- The original uses `no_blur on` here; the effect field `no_blur` accepts a
--- bool in Lua. The follow-up `no_blur on` for everything is folded into the
--- second rule below.
-
--- Disable blur for every window
+-- Disable blur for every window (covers the xwayland context menus too,
+-- so the old per-xwayland `no_blur` rule was redundant).
 hl.window_rule({ match = { class = ".*" }, no_blur = true })
 
 -- Floating - common dialogs

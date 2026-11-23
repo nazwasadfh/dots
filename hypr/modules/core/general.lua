@@ -219,6 +219,8 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
+-- NOTE: kept verbatim from the original; the path belongs to another user,
+-- so this command currently just fails silently. Safe to delete.
 hl.on("hyprland.start", function()
 	hl.exec_cmd("swaybg -i /home/tony/walls/dune-wars.png")
 end)
@@ -234,6 +236,9 @@ hl.env("XCURSOR_SIZE", "24")
 -----------------------
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
+-- All the small `hl.config` blocks below (look, layouts, misc, input) are
+-- merged into one call; no code reads them in between, so the final
+-- config is identical while Hyprland only applies it once.
 hl.config({
 	general = {
 		gaps_in = 5,
@@ -271,42 +276,27 @@ hl.config({
 	animations = {
 		enabled = true,
 	},
-})
 
-hl.window_rule({
-	name = "firefox-on-ws3",
-	match = { class = "^(firefox)$" },
-	workspace = "3 silent",
-})
-
-hl.config({
+	-- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/
 	dwindle = {
 		preserve_split = true, -- You probably want this
 	},
-})
 
--- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
-hl.config({
+	-- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
 	master = {
 		new_status = "master",
 	},
-})
 
--- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
-hl.config({
+	-- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
 	scrolling = {
 		fullscreen_on_one_column = true,
 	},
-})
 
-hl.config({
 	misc = {
 		force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
 		disable_hyprland_logo = false, -- If true disables the random hyprland logo / anime girl background. :(
 	},
-})
 
-hl.config({
 	input = {
 		kb_layout = "pl",
 		kb_variant = "",
@@ -323,6 +313,12 @@ hl.config({
 			natural_scroll = false,
 		},
 	},
+})
+
+hl.window_rule({
+	name = "firefox-on-ws3",
+	match = { class = "^(firefox)$" },
+	workspace = "3 silent",
 })
 
 --hl.gesture({

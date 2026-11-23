@@ -1,6 +1,6 @@
 -- =====================================================================
 --  User environment overrides (was: custom/env.conf)
---  These are loaded after hyprland/env.lua and override / extend it.
+--  These are loaded after modules/core/env.lua and override / extend it.
 -- =====================================================================
 
 -- # Tearing

@@ -7,7 +7,7 @@
 --  asynchronous process, so we do NOT need a trailing `& disown`.
 -- =====================================================================
 
-local vars = require("hyprland.variables")
+local vars = require("modules.core.variables")
 local qsConfig = vars.qsConfig
 
 hl.on("hyprland.start", function()

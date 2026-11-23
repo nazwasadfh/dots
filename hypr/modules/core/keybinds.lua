@@ -1,17 +1,30 @@
--- exec (on file reload)
+-- =====================================================================
+--  Core keybindings
+--  Order is preserved 1:1 with the old config: when a key is bound more
+--  than once, every binding still fires in this order.
+-- =====================================================================
+
+-- Reset the active submap when the config is (re)loaded.
 hl.exec_cmd("hyprctl dispatch submap global")
+
+-- ---------------------------------------------------------------------
+--  Shell (quickshell) shortcuts
+-- ---------------------------------------------------------------------
 --hl.bind("SUPER+P",)
--- Keybindings
 hl.bind("CTRL+SUPER_L", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
 hl.bind("CTRL + SUPER_R", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:272", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:273", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:274", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:275", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:276", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse:277", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse_up", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
-hl.bind("SUPER + mouse_down", hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
+for _, button in ipairs({
+	"mouse:272",
+	"mouse:273",
+	"mouse:274",
+	"mouse:275",
+	"mouse:276",
+	"mouse:277",
+	"mouse_up",
+	"mouse_down",
+}) do
+	hl.bind("SUPER + " .. button, hl.dsp.global("quickshell:searchToggleReleaseInterrupt"))
+end
 hl.bind("SUPER + E", hl.dsp.global("quickshell:overviewWorkspacesToggle"))
 hl.bind("SUPER + A", hl.dsp.global("quickshell:sidebarLeftToggle"))
 hl.bind("SUPER+ALT + A", hl.dsp.global("quickshell:sidebarLeftToggleDetach"))
@@ -89,32 +102,20 @@ hl.bind("SUPER + X", hl.dsp.window.fullscreen({ mode = "maximized", action = "to
 hl.bind("SUPER + Z", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 --hl.bind("SUPER+ALT + F", hl.dsp.fullscreenstate("0 3"))
 hl.bind("SUPER + P", hl.dsp.window.pin())
-hl.bind("SUPER+SHIFT + code:10", hl.dsp.window.move({ workspace = 1, follow = true }))
-hl.bind("SUPER+SHIFT + code:11", hl.dsp.window.move({ workspace = 2, follow = true }))
-hl.bind("SUPER+SHIFT + code:12", hl.dsp.window.move({ workspace = 3, follow = true }))
-hl.bind("SUPER+SHIFT + code:13", hl.dsp.window.move({ workspace = 4, follow = true }))
-hl.bind("SUPER+SHIFT + code:14", hl.dsp.window.move({ workspace = 5, follow = true }))
-hl.bind("SUPER+SHIFT + code:15", hl.dsp.window.move({ workspace = 6, follow = true }))
-hl.bind("SUPER+SHIFT + code:16", hl.dsp.window.move({ workspace = 7, follow = true }))
-hl.bind("SUPER+SHIFT + code:17", hl.dsp.window.move({ workspace = 8, follow = true }))
-hl.bind("SUPER+SHIFT + code:18", hl.dsp.window.move({ workspace = 9, follow = true }))
-hl.bind("SUPER+SHIFT + code:19", hl.dsp.window.move({ workspace = 10, follow = true }))
+-- Move the active window to workspaces 1-10 (key codes 10-19)
+for ws = 1, 10 do
+	hl.bind("SUPER+SHIFT + code:" .. (9 + ws), hl.dsp.window.move({ workspace = ws, follow = true }))
+end
 
 hl.bind("SUPER+SHIFT + S", hl.dsp.window.move({ workspace = "special", follow = true }))
 hl.bind("SUPER+SHIFT + O", hl.dsp.window.move({ workspace = "special:MANIFEST", follow = true }))
 
 hl.bind("SUPER+SHIFT + D", hl.dsp.window.move({ workspace = "special:SOCIAL", follow = true }))
 
-hl.bind("SUPER + code:10", hl.dsp.focus({ workspace = 1 }))
-hl.bind("SUPER + code:11", hl.dsp.focus({ workspace = 2 }))
-hl.bind("SUPER + code:12", hl.dsp.focus({ workspace = 3 }))
-hl.bind("SUPER + code:13", hl.dsp.focus({ workspace = 4 }))
-hl.bind("SUPER + code:14", hl.dsp.focus({ workspace = 5 }))
-hl.bind("SUPER + code:15", hl.dsp.focus({ workspace = 6 }))
-hl.bind("SUPER + code:16", hl.dsp.focus({ workspace = 7 }))
-hl.bind("SUPER + code:17", hl.dsp.focus({ workspace = 8 }))
-hl.bind("SUPER + code:18", hl.dsp.focus({ workspace = 9 }))
-hl.bind("SUPER + code:19", hl.dsp.focus({ workspace = 10 }))
+-- Focus workspaces 1-10 (key codes 10-19)
+for ws = 1, 10 do
+	hl.bind("SUPER + code:" .. (9 + ws), hl.dsp.focus({ workspace = ws }))
+end
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
 hl.bind("SUPER + O", hl.dsp.workspace.toggle_special("MANIFEST"))
 hl.bind("SUPER+D", hl.dsp.workspace.toggle_special("SOCIAL"))

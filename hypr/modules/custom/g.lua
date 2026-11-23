@@ -1,9 +1,12 @@
 -- =====================================================================
---  User general config overrides (was: custom/g.conf)
---  Loaded AFTER hyprland/general.lua. Original was named g.conf and was
---  never referenced in the main config file (only `custom/general.conf`
---  was, which doesn't exist). We keep `g.lua` so the rename still
---  matches if the user adds a `source=custom/g.conf` in future.
+--  Inactive reference: old "custom/g" general overrides
+-- ---------------------------------------------------------------------
+--  This file was never loaded by the original config (which sourced
+--  `custom/general.conf`, while the file was called `g.conf`). It is kept
+--  verbatim so the tuning notes are not lost, but it is NOT required by
+--  modules/custom/general.lua. Copy anything you want into that file to
+--  actually enable it -- and check the values, several of them are
+--  expensive at 4K.
 -- =====================================================================
 
 -- # Custom reserved area:

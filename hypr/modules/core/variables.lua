@@ -1,9 +1,9 @@
 -- =====================================================================
 --  Variables (was: hyprland/variables.conf)
 --  In hyprlang these were `$terminal = ...` style defs; in Lua they are
---  simply local variables that other config files can `require`/share.
---  To override, create ~/.config/hypr/lua/custom/variables.lua and
---  redefine the same locals there (it is loaded after this file).
+--  simply local variables shared through `require`.
+--  Override them in modules/custom/variables.lua (loaded right after
+--  this file, before anything consumes the values).
 -- =====================================================================
 
 -- The `launch_first_available.sh` script picks the first command that

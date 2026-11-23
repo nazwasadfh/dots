@@ -1,154 +1,101 @@
 -- =====================================================================
---  Hyprland main configuration (Lua port of hyprland.conf)
+--  Hyprland main configuration -- entry point (Hyprland >= 0.55, Lua)
 -- ---------------------------------------------------------------------
---  This file replaces `~/.config/hypr/hyprland.conf` for Hyprland >=0.55,
---  where the legacy hyprlang format was deprecated in favor of Lua.
---  See: https://wiki.hypr.land/Configuring/Start/
+--  Layout:
+--    modules/core/    defaults shipped with the config
+--    modules/custom/  user overrides (loaded after core)
+--    modules/shell/   shell (quickshell) integration + final look
+--    modules/func/    small runtime helpers (keybind callbacks, plugins)
 --
---  All included files live next to this one in `lua/`. The legacy `.conf`
---  files under `hyprland/` and `custom/` are kept untouched for reference
---  and so that other tools (e.g. `hyprctl reload`) still work.
+--  Load order is significant: every later module overrides the earlier
+--  ones, exactly like the old `source=` chain did.
 -- =====================================================================
 
--- ---------------------------------------------------------------------
---  Helper: load a config file tolerantly.
---  Equivalent to the old `# hyprlang noerror true` / `false` blocks:
---  a missing or broken file prints a warning, it does not abort the
---  whole config (see `Start.md` -> "Error behavior").
--- ---------------------------------------------------------------------
-local function safe_require(name)
-	local ok, err = pcall(require, name)
-	if not ok then
-		print("[hyprland.lua] warning: could not load '" .. name .. "': " .. tostring(err))
-	end
-end
+local safe_require = require("modules.loader").safe_require
 
+-- ---------------------------------------------------------------------
+--  Session shell
+-- ---------------------------------------------------------------------
 hl.on("hyprland.start", function()
-	--hl.exec_cmd("/home/imfl/.local/bin/hylock")
-	hl.exec_cmd(
-		"qs -c ~/.config/quickshell/end4-pC/ " --&&qs -p ~/.config/quickshell/hello-lock/&qs ipc -p ~/.config/quickshell/hello-lock call lock lock"
-	)
-	--hl.exec_cmd("~/.config/quickshell/hello-lock/startd")
-	--hl.exec_cmd("qs ipc -p ~/.config/quickshell/hello-lock call lock lock")
-	--	hl.exec_cmd("~/.config/quickshell/hello-lock/lock")
+	hl.exec_cmd("qs -c ~/.config/quickshell/end4-pC/ ")
 end)
+
 -- ---------------------------------------------------------------------
 --  Environment variables
 -- ---------------------------------------------------------------------
--- # hyprlang noerror true
--- source=hyprland/env.conf
-safe_require("hyprland.env")
--- # hyprlang noerror false
--- # hyprlang noerror true
--- source=custom/env.conf
-safe_require("custom.env")
--- # hyprlang noerror false
+safe_require("modules.core.env")
+safe_require("modules.custom.env")
 
 -- ---------------------------------------------------------------------
 --  Variables ($terminal, $fileManager, ...)
 -- ---------------------------------------------------------------------
--- # hyprlang noerror true
--- source=hyprland/variables.conf
-safe_require("hyprland.variables")
--- # hyprlang noerror false
--- # hyprlang noerror true
--- source=custom/variables.conf
-safe_require("custom.variables")
--- # hyprlang noerror false
+safe_require("modules.core.variables")
+safe_require("modules.custom.variables")
 
 -- ---------------------------------------------------------------------
---  Defaults (loaded conditionally, just like the original)
+--  Defaults
+--  NOTE: these flags are globals on purpose. In hyprlang a `$var` set to
+--  "" was falsy; in Lua "" is truthy, so assigning them as "" would
+--  disable the defaults. Leave them undefined to load everything.
 -- ---------------------------------------------------------------------
-
--- # hyprlang if !dontLoadDefaultExecs
--- source=hyprland/execs.conf
 if not dontLoadDefaultExecs then
-	safe_require("hyprland.execs")
+	safe_require("modules.core.execs")
 end
--- # hyprlang endif
-
--- # hyprlang if !dontLoadDefaultGeneral
--- source=hyprland/general.conf
 if not dontLoadDefaultGeneral then
-	safe_require("hyprland.general")
+	safe_require("modules.core.general")
 end
--- # hyprlang endif
-
--- # hyprlang if !dontLoadDefaultRules
--- source=hyprland/rules.conf
 if not dontLoadDefaultRules then
-	safe_require("hyprland.rules")
+	safe_require("modules.core.rules")
 end
--- # hyprlang endif
-
--- # hyprlang if !dontLoadDefaultColors
--- source=hyprland/colors.conf
 if not dontLoadDefaultColors then
-	safe_require("hyprland.colors")
+	safe_require("modules.core.colors")
 end
--- # hyprlang endif
-
--- # hyprlang if !dontLoadDefaultKeybinds
--- source=hyprland/keybinds.conf
 if not dontLoadDefaultKeybinds then
-	safe_require("hyprland.keybinds")
+	safe_require("modules.core.keybinds")
 end
--- # hyprlang endif
 
 -- ---------------------------------------------------------------------
 --  Custom (user overrides)
 -- ---------------------------------------------------------------------
-
--- # hyprlang noerror true
--- source=custom/execs.conf
-safe_require("custom.execs")
--- # hyprlang noerror true
--- source=custom/general.conf
--- (the original includes `custom/general.conf` which does not exist;
---  we keep the same behavior of silently ignoring a missing file)
-safe_require("custom.general")
--- # hyprlang noerror true
--- source=custom/rules.conf
-safe_require("custom.rules")
--- # hyprlang noerror true
--- source=custom/keybinds.conf
-safe_require("custom.keybinds")
--- # hyprlang noerror false
+safe_require("modules.custom.execs")
+safe_require("modules.custom.general")
+safe_require("modules.custom.rules")
+safe_require("modules.custom.keybinds")
 
 -- ---------------------------------------------------------------------
---  Other top-level config bits
+--  Monitors & workspaces
 -- ---------------------------------------------------------------------
-
--- source=workspaces.conf
-safe_require("workspaces")
--- source=monitors.conf
-safe_require("monitors")
+safe_require("modules.workspaces")
+safe_require("modules.monitors")
 
 -- ---------------------------------------------------------------------
---  Shell overrides
+--  Animations, then the shell overrides (they win, as before)
 -- ---------------------------------------------------------------------
-require("hyprland.animations")
--- source=hyprland/shellOverrides/main.conf
-safe_require("hyprland.shellOverrides.main")
+safe_require("modules.core.animations")
+safe_require("modules.shell.main")
 
+-- Final say on the splash logo (kept after shell/main, like the original).
 hl.config({
 	misc = {
 		disable_splash_rendering = true,
 		disable_hyprland_logo = true,
 	},
 })
-require("hyprland/shellOverrides/animations")
-require("func.plugin-init")
 
-require("func.layout-cycle")
-require("func.zoom")
-require("func.hlconfig")
-require("func.per-layout-binds")
-require("func.hy3-layout")
+safe_require("modules.shell.animations")
 
-require("func.hypr-wall")
-require("func.eleven-workspace")
+-- ---------------------------------------------------------------------
+--  Runtime helpers / plugins
+-- ---------------------------------------------------------------------
+safe_require("modules.func.plugin-init")
+safe_require("modules.func.layout-cycle")
+safe_require("modules.func.zoom")
+safe_require("modules.func.hlconfig")
+safe_require("modules.func.per-layout-binds")
+safe_require("modules.func.hypr-wall")
+safe_require("modules.func.eleven-workspace")
+safe_require("modules.func.facesearch")
 
-require("func.facesearch")
-
-require("func.glass")
+-- Disabled (100% commented out) plugin experiments, kept for reference:
+--   modules/func/glass.lua       -- hyprglass presets
+--   modules/func/hy3-layout.lua  -- hy3 layout binds
